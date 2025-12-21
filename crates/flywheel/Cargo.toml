@@ -1,19 +1,23 @@
 [package]
-name = "flywheel"
+name = "flywheel-ml"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
 description = "Flywheel CLI - AIOps ML pipeline management"
+readme = "../../README.md"
+keywords = ["ml", "aiops", "pipeline", "inference", "drift-detection"]
+categories = ["command-line-utilities", "development-tools"]
 
 [[bin]]
 name = "flywheel"
 path = "src/main.rs"
 
 [dependencies]
-flywheel-client.workspace = true
-flywheel-core.workspace = true
-flywheel-dsl.workspace = true
+flywheel-ml-client.workspace = true
+flywheel-ml-core.workspace = true
+flywheel-ml-dsl.workspace = true
 
 clap.workspace = true
 tokio.workspace = true

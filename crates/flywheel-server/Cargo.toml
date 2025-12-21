@@ -1,19 +1,23 @@
 [package]
-name = "flywheel-server"
+name = "flywheel-ml-server"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
 description = "Flywheel server binary"
+readme = "../../README.md"
+keywords = ["ml", "aiops", "server", "grpc"]
+categories = ["command-line-utilities"]
 
 [[bin]]
 name = "flywheel-server"
 path = "src/main.rs"
 
 [dependencies]
-flywheel-core.workspace = true
-flywheel-db.workspace = true
-flywheel-proto.workspace = true
+flywheel-ml-core.workspace = true
+flywheel-ml-db.workspace = true
+flywheel-ml-proto.workspace = true
 
 tonic.workspace = true
 tokio.workspace = true

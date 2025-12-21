@@ -1,14 +1,18 @@
 [package]
-name = "flywheel-inference"
+name = "flywheel-ml-inference"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
 description = "ML inference runtime for Flywheel"
+readme = "../../README.md"
+keywords = ["ml", "aiops", "inference", "machine-learning"]
+categories = ["science"]
 
 [dependencies]
-flywheel-core.workspace = true
-flywheel-proto.workspace = true
+flywheel-ml-core.workspace = true
+flywheel-ml-proto.workspace = true
 
 tonic.workspace = true
 tokio.workspace = true

@@ -25,17 +25,17 @@ rust-version = "1.75"
 
 [workspace.dependencies]
 # Internal crates
-flywheel-core = { path = "crates/flywheel-core" }
-flywheel-client = { path = "crates/flywheel-client" }
-flywheel-db = { path = "crates/flywheel-db" }
-flywheel-drift = { path = "crates/flywheel-drift" }
-flywheel-dsl = { path = "crates/flywheel-dsl" }
-flywheel-inference = { path = "crates/flywheel-inference" }
-flywheel-operator = { path = "crates/flywheel-operator" }
-flywheel-proto = { path = "crates/flywheel-proto" }
-flywheel-server = { path = "crates/flywheel-server" }
-flywheel-training = { path = "crates/flywheel-training" }
-flywheel-transform = { path = "crates/flywheel-transform" }
+flywheel-ml-core = { path = "crates/flywheel-core" }
+flywheel-ml-client = { path = "crates/flywheel-client" }
+flywheel-ml-db = { path = "crates/flywheel-db" }
+flywheel-ml-drift = { path = "crates/flywheel-drift" }
+flywheel-ml-dsl = { path = "crates/flywheel-dsl" }
+flywheel-ml-inference = { path = "crates/flywheel-inference" }
+flywheel-ml-operator = { path = "crates/flywheel-operator" }
+flywheel-ml-proto = { path = "crates/flywheel-proto" }
+flywheel-ml-server = { path = "crates/flywheel-server" }
+flywheel-ml-training = { path = "crates/flywheel-training" }
+flywheel-ml-transform = { path = "crates/flywheel-transform" }
 
 # Conveyor dependencies (adjust path as needed)
 # conveyor-dsl = { path = "../etl-router/crates/conveyor-dsl" }

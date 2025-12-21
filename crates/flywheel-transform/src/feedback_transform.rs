@@ -1,4 +1,4 @@
-use flywheel_core::{FeedbackError, FeedbackRecord, LabeledExample};
+use flywheel_ml_core::{FeedbackError, FeedbackRecord, LabeledExample};
 
 pub struct FeedbackJoinTransform {
     // TODO: Add prediction store

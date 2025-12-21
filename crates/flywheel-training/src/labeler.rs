@@ -1,4 +1,4 @@
-use flywheel_core::{FeedbackRecord, StoredPrediction, LabeledExample};
+use flywheel_ml_core::{FeedbackRecord, StoredPrediction, LabeledExample};
 use std::collections::HashMap;
 
 pub struct Labeler {

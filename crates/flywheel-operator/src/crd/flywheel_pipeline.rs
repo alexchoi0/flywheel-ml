@@ -1,4 +1,4 @@
-use flywheel_dsl::FlywheelPipelineSpec;
+use flywheel_ml_dsl::FlywheelPipelineSpec;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 

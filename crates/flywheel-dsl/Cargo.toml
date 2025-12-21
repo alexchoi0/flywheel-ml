@@ -1,13 +1,17 @@
 [package]
-name = "flywheel-dsl"
+name = "flywheel-ml-dsl"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
-description = "DSL for Flywheel pipelines, extending Conveyor"
+repository.workspace = true
+description = "DSL for Flywheel pipelines"
+readme = "../../README.md"
+keywords = ["ml", "aiops", "dsl", "pipeline"]
+categories = ["config", "development-tools"]
 
 [dependencies]
-flywheel-core.workspace = true
+flywheel-ml-core.workspace = true
 
 serde.workspace = true
 serde_json.workspace = true

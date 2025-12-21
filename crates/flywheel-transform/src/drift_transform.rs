@@ -1,4 +1,4 @@
-use flywheel_drift::{DriftConfig, DriftDetector, DriftResult};
+use flywheel_ml_drift::{DriftConfig, DriftDetector, DriftResult};
 
 pub struct DriftDetectionTransform {
     detector: DriftDetector,

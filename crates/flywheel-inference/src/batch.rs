@@ -1,4 +1,4 @@
-use flywheel_core::FeatureVector;
+use flywheel_ml_core::FeatureVector;
 
 pub struct BatchProcessor {
     batch_size: usize,

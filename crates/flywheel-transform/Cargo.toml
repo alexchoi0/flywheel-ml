@@ -1,15 +1,19 @@
 [package]
-name = "flywheel-transform"
+name = "flywheel-ml-transform"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
-description = "Conveyor transform extensions for Flywheel"
+repository.workspace = true
+description = "Transform extensions for Flywheel"
+readme = "../../README.md"
+keywords = ["ml", "aiops", "transform", "pipeline"]
+categories = ["science"]
 
 [dependencies]
-flywheel-core.workspace = true
-flywheel-inference.workspace = true
-flywheel-drift.workspace = true
+flywheel-ml-core.workspace = true
+flywheel-ml-inference.workspace = true
+flywheel-ml-drift.workspace = true
 
 async-trait.workspace = true
 tokio.workspace = true

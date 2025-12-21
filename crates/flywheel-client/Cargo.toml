@@ -1,14 +1,18 @@
 [package]
-name = "flywheel-client"
+name = "flywheel-ml-client"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
 description = "Flywheel client library"
+readme = "../../README.md"
+keywords = ["ml", "aiops", "client", "grpc"]
+categories = ["api-bindings"]
 
 [dependencies]
-flywheel-core.workspace = true
-flywheel-proto.workspace = true
+flywheel-ml-core.workspace = true
+flywheel-ml-proto.workspace = true
 
 tonic.workspace = true
 tokio.workspace = true

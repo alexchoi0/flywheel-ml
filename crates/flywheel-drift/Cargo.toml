@@ -1,13 +1,17 @@
 [package]
-name = "flywheel-drift"
+name = "flywheel-ml-drift"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
 description = "Drift detection for Flywheel"
+readme = "../../README.md"
+keywords = ["ml", "aiops", "drift-detection", "monitoring"]
+categories = ["science"]
 
 [dependencies]
-flywheel-core.workspace = true
+flywheel-ml-core.workspace = true
 
 async-trait.workspace = true
 chrono.workspace = true

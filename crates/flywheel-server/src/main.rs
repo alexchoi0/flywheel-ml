@@ -55,13 +55,13 @@ async fn main() -> anyhow::Result<()> {
 
     // Connect to database
     tracing::info!("Connecting to database...");
-    let db = flywheel_db::Database::connect(&db_url).await?;
+    let db = flywheel_ml_db::Database::connect(&db_url).await?;
     tracing::info!("Database connected");
 
     // Run migrations
     tracing::info!("Running migrations...");
     use sea_orm_migration::MigratorTrait;
-    flywheel_db::migration::Migrator::up(db.conn(), None).await?;
+    flywheel_ml_db::migration::Migrator::up(db.conn(), None).await?;
     tracing::info!("Migrations complete");
 
     // Start gRPC server
@@ -71,10 +71,10 @@ async fn main() -> anyhow::Result<()> {
     let health_service = grpc::HealthServiceImpl::new(db.clone());
 
     tonic::transport::Server::builder()
-        .add_service(flywheel_proto::control_service_server::ControlServiceServer::new(
+        .add_service(flywheel_ml_proto::control_service_server::ControlServiceServer::new(
             control_service,
         ))
-        .add_service(flywheel_proto::health_service_server::HealthServiceServer::new(
+        .add_service(flywheel_ml_proto::health_service_server::HealthServiceServer::new(
             health_service,
         ))
         .serve(cli.bind_address)

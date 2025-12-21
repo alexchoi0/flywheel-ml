@@ -1,5 +1,5 @@
-use flywheel_core::{FeatureVector, Model, ModelError, Prediction};
-use flywheel_inference::circuit_breaker::CircuitBreaker;
+use flywheel_ml_core::{FeatureVector, Model, ModelError, Prediction};
+use flywheel_ml_inference::circuit_breaker::CircuitBreaker;
 use std::sync::Arc;
 
 pub struct InferenceTransform {

@@ -776,14 +776,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "flywheel"
+name = "flywheel-ml"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "flywheel-client",
- "flywheel-core",
- "flywheel-dsl",
+ "flywheel-ml-client",
+ "flywheel-ml-core",
+ "flywheel-ml-dsl",
  "serde",
  "serde_json",
  "serde_yaml",
@@ -794,11 +794,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "flywheel-client"
+name = "flywheel-ml-client"
 version = "0.1.0"
 dependencies = [
- "flywheel-core",
- "flywheel-proto",
+ "flywheel-ml-core",
+ "flywheel-ml-proto",
  "serde",
  "serde_json",
  "thiserror 1.0.69",
@@ -807,7 +807,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "flywheel-core"
+name = "flywheel-ml-core"
 version = "0.1.0"
 dependencies = [
  "async-trait",
@@ -819,12 +819,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "flywheel-db"
+name = "flywheel-ml-db"
 version = "0.1.0"
 dependencies = [
  "async-trait",
  "chrono",
- "flywheel-core",
+ "flywheel-ml-core",
  "sea-orm",
  "sea-orm-migration",
  "serde",
@@ -835,12 +835,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "flywheel-drift"
+name = "flywheel-ml-drift"
 version = "0.1.0"
 dependencies = [
  "async-trait",
  "chrono",
- "flywheel-core",
+ "flywheel-ml-core",
  "parking_lot",
  "serde",
  "serde_json",
@@ -848,10 +848,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "flywheel-dsl"
+name = "flywheel-ml-dsl"
 version = "0.1.0"
 dependencies = [
- "flywheel-core",
+ "flywheel-ml-core",
  "schemars",
  "serde",
  "serde_json",
@@ -860,13 +860,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "flywheel-inference"
+name = "flywheel-ml-inference"
 version = "0.1.0"
 dependencies = [
  "async-trait",
  "dashmap",
- "flywheel-core",
- "flywheel-proto",
+ "flywheel-ml-core",
+ "flywheel-ml-proto",
  "parking_lot",
  "serde",
  "serde_json",
@@ -876,11 +876,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "flywheel-operator"
+name = "flywheel-ml-operator"
 version = "0.1.0"
 dependencies = [
- "flywheel-core",
- "flywheel-dsl",
+ "flywheel-ml-core",
+ "flywheel-ml-dsl",
  "schemars",
  "serde",
  "serde_json",
@@ -890,7 +890,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "flywheel-proto"
+name = "flywheel-ml-proto"
 version = "0.1.0"
 dependencies = [
  "prost",
@@ -900,15 +900,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "flywheel-server"
+name = "flywheel-ml-server"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
  "config",
- "flywheel-core",
- "flywheel-db",
- "flywheel-proto",
+ "flywheel-ml-core",
+ "flywheel-ml-db",
+ "flywheel-ml-proto",
  "prometheus",
  "sea-orm",
  "sea-orm-migration",
@@ -924,13 +924,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "flywheel-training"
+name = "flywheel-ml-training"
 version = "0.1.0"
 dependencies = [
  "async-trait",
  "bytes",
  "chrono",
- "flywheel-core",
+ "flywheel-ml-core",
  "futures",
  "serde",
  "serde_json",
@@ -940,13 +940,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "flywheel-transform"
+name = "flywheel-ml-transform"
 version = "0.1.0"
 dependencies = [
  "async-trait",
- "flywheel-core",
- "flywheel-drift",
- "flywheel-inference",
+ "flywheel-ml-core",
+ "flywheel-ml-drift",
+ "flywheel-ml-inference",
  "serde",
  "serde_json",
  "thiserror 1.0.69",

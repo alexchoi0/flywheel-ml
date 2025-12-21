@@ -1,5 +1,5 @@
 use async_trait::async_trait;
-use flywheel_core::{FeatureVector, Model, ModelError, ModelHealth, ModelMetadata, Prediction};
+use flywheel_ml_core::{FeatureVector, Model, ModelError, ModelHealth, ModelMetadata, Prediction};
 
 pub struct InferenceClient {
     endpoint: String,

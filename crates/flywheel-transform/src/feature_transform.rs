@@ -1,4 +1,4 @@
-use flywheel_core::{FeatureError, FeatureExtractor, FeatureVector};
+use flywheel_ml_core::{FeatureError, FeatureExtractor, FeatureVector};
 
 pub struct FeatureExtractionTransform {
     extractor: Box<dyn FeatureExtractor>,

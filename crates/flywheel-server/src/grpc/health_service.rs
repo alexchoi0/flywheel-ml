@@ -1,6 +1,6 @@
-use flywheel_db::Database;
-use flywheel_proto::health_service_server::HealthService;
-use flywheel_proto::{
+use flywheel_ml_db::Database;
+use flywheel_ml_proto::health_service_server::HealthService;
+use flywheel_ml_proto::{
     GetHealthRequest, GetHealthResponse,
     GetPipelineHealthRequest, GetPipelineHealthResponse,
     GetDriftStatusRequest, GetDriftStatusResponse,

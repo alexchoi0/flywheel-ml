@@ -1,13 +1,17 @@
 [package]
-name = "flywheel-db"
+name = "flywheel-ml-db"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
 description = "SeaORM database layer for Flywheel"
+readme = "../../README.md"
+keywords = ["ml", "aiops", "database", "seaorm"]
+categories = ["database"]
 
 [dependencies]
-flywheel-core.workspace = true
+flywheel-ml-core.workspace = true
 
 sea-orm.workspace = true
 sea-orm-migration.workspace = true

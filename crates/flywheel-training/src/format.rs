@@ -1,4 +1,4 @@
-use flywheel_core::LabeledExample;
+use flywheel_ml_core::LabeledExample;
 
 pub trait FormatWriter {
     fn write(&mut self, example: &LabeledExample) -> Result<(), std::io::Error>;

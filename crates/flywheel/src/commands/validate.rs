@@ -19,10 +19,10 @@ pub async fn run(_ctx: &Context, args: ValidateArgs) -> anyhow::Result<()> {
     let content = std::fs::read_to_string(&args.file)?;
 
     // Parse YAML
-    match flywheel_dsl::parser::parse_manifest(&content) {
+    match flywheel_ml_dsl::parser::parse_manifest(&content) {
         Ok(manifest) => {
             // Validate
-            match flywheel_dsl::validation::validate_manifest(&manifest) {
+            match flywheel_ml_dsl::validation::validate_manifest(&manifest) {
                 Ok(()) => {
                     println!("✓ Valid FlywheelPipeline manifest");
                     println!();

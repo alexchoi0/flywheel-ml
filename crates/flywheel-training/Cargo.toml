@@ -1,13 +1,17 @@
 [package]
-name = "flywheel-training"
+name = "flywheel-ml-training"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
+repository.workspace = true
 description = "Training data export for Flywheel"
+readme = "../../README.md"
+keywords = ["ml", "aiops", "training", "data-export"]
+categories = ["science"]
 
 [dependencies]
-flywheel-core.workspace = true
+flywheel-ml-core.workspace = true
 
 async-trait.workspace = true
 bytes.workspace = true

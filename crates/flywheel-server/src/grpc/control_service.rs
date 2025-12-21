@@ -1,6 +1,6 @@
-use flywheel_db::Database;
-use flywheel_proto::control_service_server::ControlService;
-use flywheel_proto::{
+use flywheel_ml_db::Database;
+use flywheel_ml_proto::control_service_server::ControlService;
+use flywheel_ml_proto::{
     CreatePipelineRequest, CreatePipelineResponse,
     UpdatePipelineRequest, UpdatePipelineResponse,
     DeletePipelineRequest, DeletePipelineResponse,
