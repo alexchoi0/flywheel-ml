@@ -1,0 +1,103 @@
+apiVersion: flywheel.io/v1
+kind: FlywheelPipeline
+metadata:
+  name: infrastructure-anomaly-detection
+  namespace: production
+  labels:
+    app: monitoring
+    team: platform
+spec:
+  source: kafka-metrics
+
+  stages:
+    - id: features
+      type: feature-extraction
+      config:
+        features:
+          - name: cpu_usage
+            source_field: $.metrics.cpu.usage_percent
+            transform:
+              normalize:
+                min: 0
+                max: 100
+          - name: memory_usage
+            source_field: $.metrics.memory.used_percent
+            transform:
+              normalize:
+                min: 0
+                max: 100
+          - name: disk_io_rate
+            source_field: $.metrics.disk.io_rate_mbps
+            transform:
+              log1p: {}
+          - name: request_latency_p99
+            source_field: $.metrics.http.latency_p99_ms
+            transform:
+              clip:
+                min: 0
+                max: 10000
+          - name: error_rate
+            source_field: $.metrics.http.error_rate
+        include_raw: false
+
+    - id: inference
+      type: ml-inference
+      config:
+        model_endpoint: model-server.ml:50051
+        model_id: isolation-forest-infra-v3
+        input_features:
+          - cpu_usage
+          - memory_usage
+          - disk_io_rate
+          - request_latency_p99
+          - error_rate
+        output_field: anomaly_prediction
+        timeout_ms: 100
+        batch_size: 64
+        fallback: passthrough
+
+    - id: drift-monitor
+      type: drift-detection
+      config:
+        mode: shadow
+        baseline_uri: s3://ml-models/baselines/isolation-forest-v3
+        window_size: 10000
+        check_interval_secs: 300
+        thresholds:
+          psi: 0.25
+          kl_divergence: 0.1
+        on_drift: alert
+
+  feedback:
+    source: incident-events
+    join_key: $.metadata.host
+    max_delay_hours: 24
+    labels:
+      - event: incident_created
+        label: anomaly
+        confidence: 0.95
+      - event: incident_resolved_false_alarm
+        label: normal
+        confidence: 0.90
+      - event: alert_silenced
+        label: normal
+        confidence: 0.70
+
+  training_export:
+    destination_uri: s3://ml-training/anomaly-detection/
+    format: parquet
+    partition_by:
+      - date
+      - host_cluster
+    sampling:
+      strategy: stratified
+      positive_rate: 1.0
+      negative_rate: 0.05
+
+  sinks:
+    - name: alertmanager
+      condition: "anomaly_prediction.is_anomaly && anomaly_prediction.score > 0.8"
+    - name: metrics-analytics
+      all: true
+    - name: real-time-dashboard
+      all: true

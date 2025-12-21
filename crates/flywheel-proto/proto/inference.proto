@@ -1,0 +1,121 @@
+syntax = "proto3";
+package flywheel.inference;
+
+import "google/protobuf/timestamp.proto";
+
+service InferenceService {
+    rpc Predict(PredictRequest) returns (PredictResponse);
+    rpc PredictBatch(PredictBatchRequest) returns (PredictBatchResponse);
+    rpc PredictStream(stream PredictRequest) returns (stream PredictResponse);
+    rpc GetModelInfo(ModelInfoRequest) returns (ModelInfoResponse);
+    rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+}
+
+message PredictRequest {
+    string request_id = 1;
+    string model_id = 2;
+    map<string, FeatureValue> features = 3;
+    google.protobuf.Timestamp timestamp = 4;
+    map<string, string> metadata = 5;
+}
+
+message FeatureValue {
+    oneof value {
+        double float_value = 1;
+        int64 int_value = 2;
+        string string_value = 3;
+        FloatArray float_array = 4;
+        bool bool_value = 5;
+    }
+}
+
+message FloatArray {
+    repeated double values = 1;
+}
+
+message PredictResponse {
+    string prediction_id = 1;
+    string model_id = 2;
+    string model_version = 3;
+    PredictionResult result = 4;
+    double confidence = 5;
+    uint64 latency_us = 6;
+    google.protobuf.Timestamp timestamp = 7;
+}
+
+message PredictionResult {
+    oneof result {
+        AnomalyResult anomaly = 1;
+        ClassificationResult classification = 2;
+        RegressionResult regression = 3;
+        EmbeddingResult embedding = 4;
+        bytes custom_json = 5;
+    }
+}
+
+message AnomalyResult {
+    double score = 1;
+    bool is_anomaly = 2;
+    double threshold = 3;
+    repeated string contributing_features = 4;
+}
+
+message ClassificationResult {
+    string predicted_class = 1;
+    map<string, double> class_probabilities = 2;
+}
+
+message RegressionResult {
+    double value = 1;
+    double lower_bound = 2;
+    double upper_bound = 3;
+}
+
+message EmbeddingResult {
+    repeated float vector = 1;
+}
+
+message PredictBatchRequest {
+    string batch_id = 1;
+    string model_id = 2;
+    repeated PredictRequest requests = 3;
+}
+
+message PredictBatchResponse {
+    string batch_id = 1;
+    repeated PredictResponse responses = 2;
+    BatchStats stats = 3;
+}
+
+message BatchStats {
+    uint32 total = 1;
+    uint32 succeeded = 2;
+    uint32 failed = 3;
+    uint64 avg_latency_us = 4;
+    uint64 p99_latency_us = 5;
+}
+
+message ModelInfoRequest {
+    string model_id = 1;
+}
+
+message ModelInfoResponse {
+    string model_id = 1;
+    string model_name = 2;
+    string version = 3;
+    string model_type = 4;
+    repeated string input_features = 5;
+    string output_field = 6;
+    map<string, string> labels = 7;
+}
+
+message HealthCheckRequest {
+    string model_id = 1;
+}
+
+message HealthCheckResponse {
+    string status = 1;
+    uint64 latency_ms = 2;
+    double error_rate = 3;
+    string message = 4;
+}

@@ -1,0 +1,18 @@
+[package]
+name = "flywheel-drift"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Drift detection for Flywheel"
+
+[dependencies]
+flywheel-core.workspace = true
+
+async-trait.workspace = true
+chrono.workspace = true
+parking_lot.workspace = true
+
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true

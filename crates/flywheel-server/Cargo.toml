@@ -1,0 +1,35 @@
+[package]
+name = "flywheel-server"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Flywheel server binary"
+
+[[bin]]
+name = "flywheel-server"
+path = "src/main.rs"
+
+[dependencies]
+flywheel-core.workspace = true
+flywheel-db.workspace = true
+flywheel-proto.workspace = true
+
+tonic.workspace = true
+tokio.workspace = true
+sea-orm.workspace = true
+sea-orm-migration.workspace = true
+uuid.workspace = true
+
+clap.workspace = true
+config.workspace = true
+toml.workspace = true
+
+tracing.workspace = true
+tracing-subscriber.workspace = true
+prometheus.workspace = true
+
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true

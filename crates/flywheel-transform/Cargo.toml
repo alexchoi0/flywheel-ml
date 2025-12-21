@@ -1,0 +1,19 @@
+[package]
+name = "flywheel-transform"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Conveyor transform extensions for Flywheel"
+
+[dependencies]
+flywheel-core.workspace = true
+flywheel-inference.workspace = true
+flywheel-drift.workspace = true
+
+async-trait.workspace = true
+tokio.workspace = true
+
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true

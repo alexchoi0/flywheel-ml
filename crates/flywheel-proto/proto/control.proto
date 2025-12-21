@@ -1,0 +1,161 @@
+syntax = "proto3";
+package flywheel.control;
+
+import "google/protobuf/timestamp.proto";
+
+service ControlService {
+    rpc CreatePipeline(CreatePipelineRequest) returns (CreatePipelineResponse);
+    rpc UpdatePipeline(UpdatePipelineRequest) returns (UpdatePipelineResponse);
+    rpc DeletePipeline(DeletePipelineRequest) returns (DeletePipelineResponse);
+    rpc GetPipeline(GetPipelineRequest) returns (GetPipelineResponse);
+    rpc ListPipelines(ListPipelinesRequest) returns (ListPipelinesResponse);
+    rpc EnablePipeline(EnablePipelineRequest) returns (EnablePipelineResponse);
+    rpc DisablePipeline(DisablePipelineRequest) returns (DisablePipelineResponse);
+
+    rpc RegisterModel(RegisterModelRequest) returns (RegisterModelResponse);
+    rpc UnregisterModel(UnregisterModelRequest) returns (UnregisterModelResponse);
+    rpc GetModel(GetModelRequest) returns (GetModelResponse);
+    rpc ListModels(ListModelsRequest) returns (ListModelsResponse);
+}
+
+message CreatePipelineRequest {
+    string name = 1;
+    string namespace = 2;
+    string spec_yaml = 3;
+}
+
+message CreatePipelineResponse {
+    string pipeline_id = 1;
+    string name = 2;
+    string status = 3;
+}
+
+message UpdatePipelineRequest {
+    string pipeline_id = 1;
+    string spec_yaml = 2;
+}
+
+message UpdatePipelineResponse {
+    string pipeline_id = 1;
+    string status = 2;
+    string version = 3;
+}
+
+message DeletePipelineRequest {
+    string pipeline_id = 1;
+}
+
+message DeletePipelineResponse {
+    bool success = 1;
+}
+
+message GetPipelineRequest {
+    string pipeline_id = 1;
+}
+
+message GetPipelineResponse {
+    PipelineInfo pipeline = 1;
+}
+
+message ListPipelinesRequest {
+    string namespace = 1;
+    int32 limit = 2;
+    string cursor = 3;
+}
+
+message ListPipelinesResponse {
+    repeated PipelineInfo pipelines = 1;
+    string next_cursor = 2;
+}
+
+message PipelineInfo {
+    string pipeline_id = 1;
+    string name = 2;
+    string namespace = 3;
+    string status = 4;
+    string spec_yaml = 5;
+    google.protobuf.Timestamp created_at = 6;
+    google.protobuf.Timestamp updated_at = 7;
+    PipelineStats stats = 8;
+}
+
+message PipelineStats {
+    int64 records_processed = 1;
+    int64 records_failed = 2;
+    int64 predictions_made = 3;
+    int64 feedback_received = 4;
+    double current_accuracy = 5;
+}
+
+message EnablePipelineRequest {
+    string pipeline_id = 1;
+}
+
+message EnablePipelineResponse {
+    bool success = 1;
+    string status = 2;
+}
+
+message DisablePipelineRequest {
+    string pipeline_id = 1;
+}
+
+message DisablePipelineResponse {
+    bool success = 1;
+    string status = 2;
+}
+
+message RegisterModelRequest {
+    string model_id = 1;
+    string model_name = 2;
+    string version = 3;
+    string model_type = 4;
+    string endpoint = 5;
+    repeated string input_features = 6;
+    string output_field = 7;
+    map<string, string> labels = 8;
+}
+
+message RegisterModelResponse {
+    string model_id = 1;
+    bool success = 2;
+}
+
+message UnregisterModelRequest {
+    string model_id = 1;
+}
+
+message UnregisterModelResponse {
+    bool success = 1;
+}
+
+message GetModelRequest {
+    string model_id = 1;
+}
+
+message GetModelResponse {
+    ModelInfo model = 1;
+}
+
+message ListModelsRequest {
+    int32 limit = 1;
+    string cursor = 2;
+}
+
+message ListModelsResponse {
+    repeated ModelInfo models = 1;
+    string next_cursor = 2;
+}
+
+message ModelInfo {
+    string model_id = 1;
+    string model_name = 2;
+    string version = 3;
+    string model_type = 4;
+    string endpoint = 5;
+    string status = 6;
+    double accuracy = 7;
+    uint64 latency_p99_ms = 8;
+    google.protobuf.Timestamp deployed_at = 9;
+    map<string, string> labels = 10;
+}

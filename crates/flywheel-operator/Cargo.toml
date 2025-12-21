@@ -1,0 +1,19 @@
+[package]
+name = "flywheel-operator"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Kubernetes operator for Flywheel"
+
+[dependencies]
+flywheel-core.workspace = true
+flywheel-dsl.workspace = true
+
+tokio.workspace = true
+
+serde.workspace = true
+serde_json.workspace = true
+serde_yaml.workspace = true
+thiserror.workspace = true
+schemars.workspace = true

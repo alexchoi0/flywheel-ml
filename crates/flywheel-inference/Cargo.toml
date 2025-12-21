@@ -1,0 +1,22 @@
+[package]
+name = "flywheel-inference"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "ML inference runtime for Flywheel"
+
+[dependencies]
+flywheel-core.workspace = true
+flywheel-proto.workspace = true
+
+tonic.workspace = true
+tokio.workspace = true
+
+async-trait.workspace = true
+dashmap.workspace = true
+parking_lot.workspace = true
+
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
