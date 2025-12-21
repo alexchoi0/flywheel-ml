@@ -20,7 +20,7 @@ version = "0.1.0"
 edition = "2021"
 authors = ["Alex Choi"]
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/alexchoi/flywheel"
+repository = "https://github.com/alexchoi0/flywheel"
 rust-version = "1.75"
 
 [workspace.dependencies]
