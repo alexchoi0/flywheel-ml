@@ -1,0 +1,109 @@
+name: Publish to crates.io
+
+on:
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Rust
+        uses: dtolnay/rust-action@stable
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Get current version
+        id: version
+        run: |
+          CURRENT=$(grep '^version = ' Cargo.toml | head -1 | sed 's/version = "\(.*\)"/\1/')
+          echo "current=$CURRENT" >> $GITHUB_OUTPUT
+
+          # Parse version components and bump patch
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+          echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Bump version
+        run: |
+          NEW_VERSION="${{ steps.version.outputs.new }}"
+          sed -i "s/^version = \".*\"/version = \"$NEW_VERSION\"/" Cargo.toml
+          echo "Bumped version from ${{ steps.version.outputs.current }} to $NEW_VERSION"
+
+      - name: Commit version bump
+        run: |
+          git add Cargo.toml Cargo.lock
+          git commit -m "chore: bump version to ${{ steps.version.outputs.new }}" || echo "No changes to commit"
+          git push
+
+      - name: Publish crates
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: |
+          publish_crate() {
+            local crate=$1
+            local max_retries=3
+            local retry=0
+
+            while [ $retry -lt $max_retries ]; do
+              echo "Publishing $crate (attempt $((retry + 1))/$max_retries)..."
+              if cargo publish -p "$crate" --no-verify; then
+                echo "Successfully published $crate"
+                return 0
+              fi
+              retry=$((retry + 1))
+              sleep 30
+            done
+
+            echo "Failed to publish $crate after $max_retries attempts"
+            return 1
+          }
+
+          wait_for_index() {
+            echo "Waiting for crates.io to index..."
+            sleep 45
+          }
+
+          # Tier 1: No internal dependencies
+          publish_crate flywheel-ml-core
+          publish_crate flywheel-ml-proto
+          wait_for_index
+
+          # Tier 2: Depends on core only
+          publish_crate flywheel-ml-db
+          publish_crate flywheel-ml-dsl
+          publish_crate flywheel-ml-drift
+          publish_crate flywheel-ml-training
+          wait_for_index
+
+          # Tier 3: Depends on core + proto
+          publish_crate flywheel-ml-client
+          publish_crate flywheel-ml-inference
+          wait_for_index
+
+          # Tier 4: Depends on multiple crates
+          publish_crate flywheel-ml-transform
+          publish_crate flywheel-ml-operator
+          publish_crate flywheel-ml-server
+          wait_for_index
+
+          # Tier 5: CLI
+          publish_crate flywheel-ml
+
+          echo "All crates published successfully!"
+
+      - name: Create release tag
+        run: |
+          git tag "v${{ steps.version.outputs.new }}"
+          git push origin "v${{ steps.version.outputs.new }}"
