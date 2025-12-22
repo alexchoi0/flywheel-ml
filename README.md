@@ -1,6 +1,6 @@
-# Flywheel
+# Flywheel ML
 
-AIOps ML pipeline framework in Rust. Flywheel implements a self-improving loop where the same pipeline that runs inference also collects ground truth feedback, automatically generating labeled training data.
+ML pipeline framework in Rust. Flywheel implements a self-improving loop where the same pipeline that runs inference also collects ground truth feedback, automatically generating labeled training data.
 
 ## Architecture
 
