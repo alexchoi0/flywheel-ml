@@ -130,7 +130,7 @@ flywheel graph anomaly-detection -o dag.png  # Export as image
 ## Pipeline Manifest
 
 ```yaml
-apiVersion: flywheel.io/v1
+apiVersion: conveyor.etl/v1
 kind: FlywheelPipeline
 metadata:
   name: anomaly-detection
