@@ -1,4 +1,4 @@
-apiVersion: flywheel.io/v1
+apiVersion: flywheel-ml.io/v1
 kind: FlywheelPipeline
 metadata:
   name: infrastructure-anomaly-detection
