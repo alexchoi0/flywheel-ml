@@ -1,15 +1,15 @@
-# Flywheel ML
+# Flywheel-ML
 
-ML pipeline framework in Rust. Flywheel implements a self-improving loop where the same pipeline that runs inference also collects ground truth feedback, automatically generating labeled training data.
+ML pipeline framework in Rust. Flywheel-ML implements a self-improving loop where the same pipeline that runs inference also collects ground truth feedback, automatically generating labeled training data.
 
 ## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         FLYWHEEL ARCHITECTURE                               │
+│                         FLYWHEEL-ML ARCHITECTURE                            │
 │                                                                             │
 │   ┌──────────────────────────────────────────────────────────────────────┐  │
-│   │                      flywheel-server                                 │  │
+│   │                      flywheel-ml-server                              │  │
 │   │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌────────────┐   │  │
 │   │  │ gRPC API    │  │  Pipeline   │  │   Health    │  │  Metrics   │   │  │
 │   │  │ (tonic)     │  │  Registry   │  │  Tracker    │  │ (prom)     │   │  │
@@ -23,7 +23,7 @@ ML pipeline framework in Rust. Flywheel implements a self-improving loop where t
 │                              ▲                                              │
 │                              │ gRPC                                         │
 │   ┌──────────────────────────┴───────────────────────────────────────────┐  │
-│   │                         flywheel (CLI)                               │  │
+│   │                         flywheel-ml (CLI)                            │  │
 │   │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌────────────┐   │  │
 │   │  │ health      │  │ logs        │  │ drift       │  │ model      │   │  │
 │   │  │ stats       │  │ graph       │  │ export      │  │ validate   │   │  │
@@ -78,8 +78,8 @@ cargo build --release
 ```
 
 Binaries are output to `target/release/`:
-- `flywheel` - CLI client
-- `flywheel-server` - Server binary
+- `flywheel-ml` - CLI client
+- `flywheel-ml-server` - Server binary
 
 ## CLI Usage
 
@@ -91,46 +91,46 @@ kubectl get flywheelpipelines
 kubectl delete flywheelpipeline <name>
 ```
 
-Flywheel CLI provides operational commands:
+Flywheel-ML CLI provides operational commands:
 
 ```bash
 # Health and monitoring
-flywheel health                              # Overall health
-flywheel health pipeline anomaly-detection   # Pipeline health
-flywheel logs anomaly-detection              # View logs
-flywheel logs -f anomaly-detection           # Follow logs
+flywheel-ml health                              # Overall health
+flywheel-ml health pipeline anomaly-detection   # Pipeline health
+flywheel-ml logs anomaly-detection              # View logs
+flywheel-ml logs -f anomaly-detection           # Follow logs
 
 # Model management
-flywheel model list                          # List registered models
-flywheel model show isolation-forest-v3      # Model details + metrics
-flywheel model history isolation-forest-v3   # Performance history
-flywheel model compare v2 v3                 # Compare versions
+flywheel-ml model list                          # List registered models
+flywheel-ml model show isolation-forest-v3      # Model details + metrics
+flywheel-ml model history isolation-forest-v3   # Performance history
+flywheel-ml model compare v2 v3                 # Compare versions
 
 # Drift monitoring
-flywheel drift status                        # Current drift status
-flywheel drift history -p anomaly-detection  # Drift event history
+flywheel-ml drift status                        # Current drift status
+flywheel-ml drift history -p anomaly-detection  # Drift event history
 
 # Statistics
-flywheel stats                               # All pipeline stats
-flywheel stats predictions -p anomaly        # Prediction stats
-flywheel stats feedback -p anomaly           # Feedback stats
-flywheel stats training -p anomaly           # Training data stats
+flywheel-ml stats                               # All pipeline stats
+flywheel-ml stats predictions -p anomaly        # Prediction stats
+flywheel-ml stats feedback -p anomaly           # Feedback stats
+flywheel-ml stats training -p anomaly           # Training data stats
 
 # Training data export
-flywheel export -p anomaly-detection -o ./data/
+flywheel-ml export -p anomaly-detection -o ./data/
 
 # Validation
-flywheel validate -f pipeline.yaml           # Validate manifest
+flywheel-ml validate -f pipeline.yaml           # Validate manifest
 
 # Visualization
-flywheel graph anomaly-detection             # Show DAG
-flywheel graph anomaly-detection -o dag.png  # Export as image
+flywheel-ml graph anomaly-detection             # Show DAG
+flywheel-ml graph anomaly-detection -o dag.png  # Export as image
 ```
 
 ## Pipeline Manifest
 
 ```yaml
-apiVersion: conveyor.etl/v1
+apiVersion: flywheel-ml.io/v1
 kind: FlywheelPipeline
 metadata:
   name: anomaly-detection
@@ -219,7 +219,7 @@ spec:
 ## Server Configuration
 
 ```bash
-flywheel-server \
+flywheel-ml-server \
   --bind-address 0.0.0.0:50051 \
   --metrics-address 0.0.0.0:9090 \
   --db-url postgres://flywheel:password@localhost/flywheel
@@ -244,18 +244,18 @@ router_endpoint = "conveyor-router:50051"
 ```
 flywheel/
 ├── crates/
-│   ├── flywheel/              # CLI binary
-│   ├── flywheel-server/       # Server binary
-│   ├── flywheel-core/         # Core traits and types
-│   ├── flywheel-proto/        # gRPC protocol definitions
-│   ├── flywheel-db/           # SeaORM database layer
-│   ├── flywheel-dsl/          # Pipeline DSL
-│   ├── flywheel-client/       # Client library
-│   ├── flywheel-inference/    # Inference runtime
-│   ├── flywheel-drift/        # Drift detection
-│   ├── flywheel-training/     # Training data export
-│   ├── flywheel-transform/    # Transform implementations
-│   └── flywheel-operator/     # Kubernetes operator
+│   ├── flywheel-ml/              # CLI binary
+│   ├── flywheel-ml-server/       # Server binary
+│   ├── flywheel-ml-core/         # Core traits and types
+│   ├── flywheel-ml-proto/        # gRPC protocol definitions
+│   ├── flywheel-ml-db/           # SeaORM database layer
+│   ├── flywheel-ml-dsl/          # Pipeline DSL
+│   ├── flywheel-ml-client/       # Client library
+│   ├── flywheel-ml-inference/    # Inference runtime
+│   ├── flywheel-ml-drift/        # Drift detection
+│   ├── flywheel-ml-training/     # Training data export
+│   ├── flywheel-ml-transform/    # Transform implementations
+│   └── flywheel-ml-operator/     # Kubernetes operator
 └── examples/
     └── anomaly-detection.yaml
 ```

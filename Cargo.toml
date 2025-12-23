@@ -1,18 +1,18 @@
 [workspace]
 resolver = "2"
 members = [
-    "crates/flywheel",
-    "crates/flywheel-client",
-    "crates/flywheel-core",
-    "crates/flywheel-db",
-    "crates/flywheel-drift",
-    "crates/flywheel-dsl",
-    "crates/flywheel-inference",
-    "crates/flywheel-operator",
-    "crates/flywheel-proto",
-    "crates/flywheel-server",
-    "crates/flywheel-training",
-    "crates/flywheel-transform",
+    "crates/flywheel-ml",
+    "crates/flywheel-ml-client",
+    "crates/flywheel-ml-core",
+    "crates/flywheel-ml-db",
+    "crates/flywheel-ml-drift",
+    "crates/flywheel-ml-dsl",
+    "crates/flywheel-ml-inference",
+    "crates/flywheel-ml-operator",
+    "crates/flywheel-ml-proto",
+    "crates/flywheel-ml-server",
+    "crates/flywheel-ml-training",
+    "crates/flywheel-ml-transform",
 ]
 
 [workspace.package]
@@ -25,17 +25,17 @@ rust-version = "1.75"
 
 [workspace.dependencies]
 # Internal crates
-flywheel-ml-core = { path = "crates/flywheel-core" }
-flywheel-ml-client = { path = "crates/flywheel-client" }
-flywheel-ml-db = { path = "crates/flywheel-db" }
-flywheel-ml-drift = { path = "crates/flywheel-drift" }
-flywheel-ml-dsl = { path = "crates/flywheel-dsl" }
-flywheel-ml-inference = { path = "crates/flywheel-inference" }
-flywheel-ml-operator = { path = "crates/flywheel-operator" }
-flywheel-ml-proto = { path = "crates/flywheel-proto" }
-flywheel-ml-server = { path = "crates/flywheel-server" }
-flywheel-ml-training = { path = "crates/flywheel-training" }
-flywheel-ml-transform = { path = "crates/flywheel-transform" }
+flywheel-ml-core = { path = "crates/flywheel-ml-core" }
+flywheel-ml-client = { path = "crates/flywheel-ml-client" }
+flywheel-ml-db = { path = "crates/flywheel-ml-db" }
+flywheel-ml-drift = { path = "crates/flywheel-ml-drift" }
+flywheel-ml-dsl = { path = "crates/flywheel-ml-dsl" }
+flywheel-ml-inference = { path = "crates/flywheel-ml-inference" }
+flywheel-ml-operator = { path = "crates/flywheel-ml-operator" }
+flywheel-ml-proto = { path = "crates/flywheel-ml-proto" }
+flywheel-ml-server = { path = "crates/flywheel-ml-server" }
+flywheel-ml-training = { path = "crates/flywheel-ml-training" }
+flywheel-ml-transform = { path = "crates/flywheel-ml-transform" }
 
 # Conveyor dependencies (adjust path as needed)
 # conveyor-dsl = { path = "../etl-router/crates/conveyor-dsl" }
@@ -89,6 +89,12 @@ bytes = "1.5"
 futures = "0.3"
 dashmap = "6.0"
 parking_lot = "0.12"
+
+# Data formats
+arrow = { version = "53", default-features = false, features = ["prettyprint"] }
+parquet = { version = "53", default-features = false, features = ["arrow", "async"] }
+csv = "1.3"
+rand = "0.8"
 
 # Testing
 tokio-test = "0.4"
